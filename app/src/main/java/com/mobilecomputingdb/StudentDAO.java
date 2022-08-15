@@ -51,6 +51,29 @@ public class StudentDAO extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void  deleteStudent(Student STUDENTModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //Hash map, as we did in bundles
+        ContentValues cv = new ContentValues();
+
+        cv.put(STUDENT_ID,STUDENTModel.getId());
+        db.delete(STUDENT_TABLE, STUDENT_ID + "=" + STUDENTModel.getId(), null);
+        db.close();
+    }
+
+    public void  updateStudent(Student STUDENTModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //Hash map, as we did in bundles
+        ContentValues cv = new ContentValues();
+
+        cv.put(STUDENT_NAME, STUDENTModel.getName());
+        cv.put(STUDENT_ROLL, STUDENTModel.getRollNumber());
+        cv.put(STUDENT_ENROLL, STUDENTModel.isEnroll());
+
+        db.update(STUDENT_TABLE, cv, STUDENT_ID + "=" + STUDENTModel.getId(), null);
+        db.close();
+    }
+
     public ArrayList<Student> getAllStudents() {
 
         SQLiteDatabase db = this.getReadableDatabase();
