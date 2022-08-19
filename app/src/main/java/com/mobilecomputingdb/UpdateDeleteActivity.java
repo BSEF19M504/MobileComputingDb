@@ -26,8 +26,6 @@ public class UpdateDeleteActivity extends AppCompatActivity {
 
         Student student = studentDAO.getStudentById(index);
 
-        Toast.makeText(this, student.toString(), Toast.LENGTH_SHORT).show();
-
         EditText editText1 = findViewById(R.id.editTextTextPersonName);
         editText1.setText(student.getName());
         EditText editText2 = findViewById(R.id.editTextTextPersonName2);
@@ -43,7 +41,6 @@ public class UpdateDeleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 studentModel = new Student(student.getId(),editText1.getText().toString(), Integer.parseInt(editText2.getText().toString()), switch1.isChecked());
-                //Toast.makeText(MainActivity.this, studentModel.toString(), Toast.LENGTH_SHORT).show();
                 editText1.setText("");
                 editText1.setText("");
                 switch1.setChecked(false);
