@@ -51,13 +51,10 @@ public class StudentDAO extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void  deleteStudent(Student STUDENTModel){
+    public void  deleteStudent(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        //Hash map, as we did in bundles
-        ContentValues cv = new ContentValues();
 
-        cv.put(STUDENT_ID,STUDENTModel.getId());
-        db.delete(STUDENT_TABLE, STUDENT_ID + "=" + STUDENTModel.getId(), null);
+        db.delete(STUDENT_TABLE, STUDENT_ID + "=" + id, null);
         db.close();
     }
 
@@ -86,7 +83,8 @@ public class StudentDAO extends SQLiteOpenHelper {
         if (cursorCourses.moveToFirst()) {
             do {
 
-                studentArrayList.add(new Student(cursorCourses.getString(1),
+                studentArrayList.add(new Student(cursorCourses.getInt(0),
+                        cursorCourses.getString(1),
                         cursorCourses.getInt(2),
                         cursorCourses.getInt(3) == 1));
             } while (cursorCourses.moveToNext());
@@ -97,4 +95,19 @@ public class StudentDAO extends SQLiteOpenHelper {
         return studentArrayList;
     }
 
+    public Student getStudentById(int id){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursorCourses = db.rawQuery("SELECT * FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + "=" + id,null);
+
+        Student student = null;
+        System.out.println(id);
+        if (cursorCourses.moveToFirst()) {
+            student = new Student(cursorCourses.getInt(0),cursorCourses.getString(1),
+                        cursorCourses.getInt(2),
+                        cursorCourses.getInt(3) == 1);
+        }
+        return student;
+    }
 }
