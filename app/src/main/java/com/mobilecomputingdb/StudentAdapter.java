@@ -34,25 +34,6 @@ public class StudentAdapter extends ArrayAdapter{
         TextView textView3 = convertView.findViewById(R.id.textView3);
         String isEnrolled = student.isEnroll()?"Enrolled":"Not Enrolled";
         textView3.setText(isEnrolled);
-        TextView textView4 = convertView.findViewById(R.id.textView4);
-        String id = Integer.toString(student.getId());
-        textView4.setText(id);
-
-        Button button1 = convertView.findViewById(R.id.button);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        Button button2 = convertView.findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         return convertView;
     }

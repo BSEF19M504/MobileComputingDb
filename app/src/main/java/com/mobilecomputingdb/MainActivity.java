@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
     EditText editName, editRollNumber;
     Switch switchIsActive;
     ListView listViewStudent;
+    List<Student> list;
+    StudentAdapter arrayAdapter;
+    boolean isLoaded;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         editRollNumber = findViewById(R.id.editTextRollNumber);
         switchIsActive = findViewById(R.id.switchStudent);
         listViewStudent = findViewById(R.id.listViewStudent);
+        isLoaded = false;
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             Student studentModel;
@@ -39,24 +45,42 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     studentModel = new Student(editName.getText().toString(), Integer.parseInt(editRollNumber.getText().toString()), switchIsActive.isChecked());
                     //Toast.makeText(MainActivity.this, studentModel.toString(), Toast.LENGTH_SHORT).show();
+                    editName.setText("");
+                    editRollNumber.setText("");
+                    switchIsActive.setChecked(false);
+                    StudentDAO dbHelper  = new StudentDAO(MainActivity.this);
+                    dbHelper.addStudent(studentModel);
+                    if(isLoaded) {
+                        list = dbHelper.getAllStudents();
+                        arrayAdapter = new StudentAdapter
+                                (MainActivity.this, android.R.layout.simple_list_item_1,list);
+                        listViewStudent.setAdapter(arrayAdapter);
+                        arrayAdapter.notifyDataSetChanged();
+                    }
                 }
                 catch (Exception e){
                     Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
-                StudentDAO dbHelper  = new StudentDAO(MainActivity.this);
-                dbHelper.addStudent(studentModel);
             }
         });
 
         buttonViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isLoaded = true;
                 StudentDAO dbHelper = new StudentDAO(MainActivity.this);
-                List<Student> list = dbHelper.getAllStudents();
-                ArrayAdapter arrayAdapter = new ArrayAdapter<Student>
+                list = dbHelper.getAllStudents();
+                arrayAdapter = new StudentAdapter
                         (MainActivity.this, android.R.layout.simple_list_item_1,list);
                 listViewStudent.setAdapter(arrayAdapter);
+                arrayAdapter.notifyDataSetChanged();
 
+            }
+        });
+        listViewStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MainActivity.this, Integer.toString(i), Toast.LENGTH_SHORT).show();
             }
         });
 
