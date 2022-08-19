@@ -102,7 +102,6 @@ public class StudentDAO extends SQLiteOpenHelper {
         Cursor cursorCourses = db.rawQuery("SELECT * FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + "=" + id,null);
 
         Student student = null;
-        System.out.println(id);
         if (cursorCourses.moveToFirst()) {
             student = new Student(cursorCourses.getInt(0),cursorCourses.getString(1),
                         cursorCourses.getInt(2),

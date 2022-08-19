@@ -41,12 +41,12 @@ public class UpdateDeleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 studentModel = new Student(student.getId(),editText1.getText().toString(), Integer.parseInt(editText2.getText().toString()), switch1.isChecked());
-                editText1.setText("");
-                editText1.setText("");
-                switch1.setChecked(false);
                 StudentDAO dbHelper  = new StudentDAO(getApplicationContext());
                 dbHelper.updateStudent(studentModel);
                 finish();
+                editText1.setText("");
+                editText1.setText("");
+                switch1.setChecked(false);
             }
         });
 

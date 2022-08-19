@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
     List<Student> list;
     StudentAdapter arrayAdapter;
     boolean isLoaded;
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        listViewStudent.setAdapter(null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,4 +93,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
