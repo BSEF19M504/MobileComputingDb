@@ -19,6 +19,10 @@ public class Student {
         this.isEnroll = isEnroll;
     }
 
+    public Student(boolean isEnroll) {
+        this.isEnroll = isEnroll;
+    }
+
     public int getId() {
         return id;
     }
